@@ -1,2 +1,3 @@
 # AWS-CloudFormation-Sample-Templates
 Feel free to use these sample templates. If you notice any inconsistencies or if you come across a better way of creating any of the resources, please comment or reach out to me. It's a great opportunity for me to learn as well. Before launching a template, always review the resources that it will create and the permissions it requires. 
+**Warning** You might be charged/billed for some of the resources used in various templates. Before launching a tempalte, you should estimate the cost. I recommand using the templates for learning purposes rather then using in production scenarios. 
