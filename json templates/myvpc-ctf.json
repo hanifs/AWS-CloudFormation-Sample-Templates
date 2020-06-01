@@ -7,67 +7,67 @@
     "VpcCidrBlock": {
       "Description": "Select Cidr block for vpc",
       "Type": "String",
-      "Default": "132.28.0.0/16"
+      "Default": "192.168.0.0/16"
     },
 
     "DMZSubnet1CidrBlock": {
       "Description": "Choose Cidr for DMZ Subnet1",
       "Type": "String",
-      "Default": "132.28.1.0/24"
+      "Default": "192.168.1.0/24"
     },
 
     "DMZSubnet2CidrBlock": {
       "Description": "Choose Cidr for DMZ Subnet2",
       "Type": "String",
-      "Default": "132.28.2.0/24"
+      "Default": "192.168.2.0/24"
     },
 
     "AppSubnet1CidrBlock": {
       "Description": "Choose Cidr for AppSubnet1",
       "Type": "String",
-      "Default": "132.28.3.0/24"
+      "Default": "192.168.3.0/24"
     },
 
     "AppSubnet2CidrBlock": {
       "Description": "Choose Cidr for AppSubnet2",
       "Type": "String",
-      "Default": "132.28.4.0/24"
+      "Default": "192.168.4.0/24"
     },
 
     "WebSubnet1CidrBlock": {
       "Description": "Choose Cidr for WebSubnet1",
       "Type": "String",
-      "Default": "132.28.5.0/24"
+      "Default": "192.168.5.0/24"
     },
 
     "WebSubnet2CidrBlock": {
       "Description": "Choose Cidr for WebSubnet2",
       "Type": "String",
-      "Default": "132.28.6.0/24"
+      "Default": "192.168.6.0/24"
     },
 
     "DBSubnet1CidrBlock": {
       "Description": "Choose Cidr for DBSubnet1",
       "Type": "String",
-      "Default": "132.28.7.0/24"
+      "Default": "192.168.7.0/24"
     },
 
     "DBSubnet2CidrBlock": {
       "Description": "Choose Cidr for DBSubnet2",
       "Type": "String",
-      "Default": "132.28.8.0/24"
+      "Default": "192.168.8.0/24"
     },
 
     "IntElbSubnet1CidrBlock": {
       "Description": "Choose Cidr for IntElbSubnet1",
       "Type": "String",
-      "Default": "132.28.9.0/24"
+      "Default": "192.168.9.0/24"
     },
 
     "IntElbSubnet2CidrBlock": {
       "Description": "Choose Cidr for IntElbSubnet2",
       "Type": "String",
-      "Default": "132.28.10.0/24"
+      "Default": "192.168.10.0/24"
     },
 
     "AZs": {
