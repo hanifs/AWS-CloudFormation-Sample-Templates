@@ -1,0 +1,469 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This CTF Template creates a three-tier network architecure. Using Parameters, it creates a VPC, Internet Gateway, VPC and Internet Gateway attachment, two private subnets, eight public subnets, Cidr Block for each subnet, NACL for each subnet, Route Table for each subnet, Subnet and Route Table Association, EIP. 'Warning': You will be billed for using this template.",
+
+  "Parameters": {
+    "VpcCidrBlock": {
+      "Description": "Select Cidr block for vpc",
+      "Type": "String",
+      "Default": "132.28.0.0/16"
+    },
+
+    "DMZSubnet1CidrBlock": {
+      "Description": "Choose Cidr for DMZ Subnet1",
+      "Type": "String",
+      "Default": "132.28.1.0/24"
+    },
+
+    "DMZSubnet2CidrBlock": {
+      "Description": "Choose Cidr for DMZ Subnet2",
+      "Type": "String",
+      "Default": "132.28.2.0/24"
+    },
+
+    "AppSubnet1CidrBlock": {
+      "Description": "Choose Cidr for AppSubnet1",
+      "Type": "String",
+      "Default": "132.28.3.0/24"
+    },
+
+    "AppSubnet2CidrBlock": {
+      "Description": "Choose Cidr for AppSubnet2",
+      "Type": "String",
+      "Default": "132.28.4.0/24"
+    },
+
+    "WebSubnet1CidrBlock": {
+      "Description": "Choose Cidr for WebSubnet1",
+      "Type": "String",
+      "Default": "132.28.5.0/24"
+    },
+
+    "WebSubnet2CidrBlock": {
+      "Description": "Choose Cidr for WebSubnet2",
+      "Type": "String",
+      "Default": "132.28.6.0/24"
+    },
+
+    "DBSubnet1CidrBlock": {
+      "Description": "Choose Cidr for DBSubnet1",
+      "Type": "String",
+      "Default": "132.28.7.0/24"
+    },
+
+    "DBSubnet2CidrBlock": {
+      "Description": "Choose Cidr for DBSubnet2",
+      "Type": "String",
+      "Default": "132.28.8.0/24"
+    },
+
+    "IntElbSubnet1CidrBlock": {
+      "Description": "Choose Cidr for IntElbSubnet1",
+      "Type": "String",
+      "Default": "132.28.9.0/24"
+    },
+
+    "IntElbSubnet2CidrBlock": {
+      "Description": "Choose Cidr for IntElbSubnet2",
+      "Type": "String",
+      "Default": "132.28.10.0/24"
+    },
+
+    "AZs": {
+      "Description": "Choose AZ for Subnet1",
+      "Type": "AWS::EC2::AvailabilityZone::Name",
+      "Default": "us-east-1b"
+    }
+  },
+
+  "Resources" : {
+    "MyVPCWordpress": {
+      "Type" : "AWS::EC2::VPC",
+      "Properties" : {
+        "CidrBlock" : {
+          "Ref": "VpcCidrBlock"
+        },
+        "Tags" : [
+          {"Key": "Name", "Value": "My-wordpress-Vpc"},
+          {"Key": "CreatedBy", "Value": "Hanif"}
+        ]
+      }
+    },
+
+    "InternetGateway": {
+      "Type" : "AWS::EC2::InternetGateway",
+      "Properties" : {
+        "Tags" : [ {"Key": "Name", "Value": "IntGW01" }]
+      }
+    },
+    "VPCGatewayAttachment": {
+      "Type" : "AWS::EC2::VPCGatewayAttachment",
+      "Properties" : {
+        "InternetGatewayId" : {"Ref": "InternetGateway"},
+        "VpcId" : {"Ref": "MyVPCWordpress"}
+      }
+    },
+
+    "DMZSubnet1" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "DMZSubnet1CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "DMZSubnet1"}]
+        }
+    },
+
+    "DMZSubnet2" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "DMZSubnet2CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "DMZSubnet2"}]
+        }
+    },
+
+    "AppSubnet1" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "AppSubnet1CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "AppSubnet1"}]
+        }
+    },
+
+    "AppSubnet2" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "AppSubnet2CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "AppSubnet2"}]
+        }
+    },
+
+    "WebSubnet1" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "WebSubnet1CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "WebSubnet1"}]
+        }
+    },
+
+    "WebSubnet2" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "WebSubnet2CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "WebSubnet2"}]
+        }
+    },
+
+    "DBSubnet1" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "DBSubnet1CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "DBSubnet1"}]
+        }
+    },
+
+    "DBSubnet2" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "DBSubnet2CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "DBSubnet2"}]
+        }
+    },
+
+    "IntElbSubnet1" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "IntElbSubnet1CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "IntElbSubnet1"}]
+        }
+    },
+
+    "IntElbSubnet2" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+          "AvailabilityZone": {"Ref": "AZs"},
+
+          "VpcId" : {
+            "Ref" : "MyVPCWordpress"},
+
+          "CidrBlock": {
+            "Ref": "IntElbSubnet2CidrBlock"},
+
+          "Tags" : [
+            {"Key": "Name", "Value": "IntElbSubnet2"}]
+        }
+    },
+
+    "DMZRouteTable": {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "MyVPCWordpress"},
+        "Tags" : [{"Key": "Name", "Value": "Dmz Route table"}]
+      }
+    },
+
+    "AppRouteTable": {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "MyVPCWordpress"},
+        "Tags" : [{"Key": "Name", "Value": "App Route table"}]
+      }
+    },
+
+    "WebRouteTable": {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "MyVPCWordpress"},
+        "Tags" : [{"Key": "Name", "Value": "Web Route table"}]
+      }
+    },
+
+    "DBRouteTable": {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "MyVPCWordpress"},
+        "Tags" : [{"Key": "Name", "Value": "DB Route table"}]
+      }
+    },
+
+    "IntElbRouteTable": {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "MyVPCWordpress"},
+        "Tags" : [{"Key": "Name", "Value": "IntElb Route table"}]
+      }
+    },
+
+    "DMZSubnet1RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "DMZRouteTable"},
+        "SubnetId" : {"Ref": "DMZSubnet1"}
+      }
+    },
+    "DMZSubnet2RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "DMZRouteTable"},
+        "SubnetId" : {"Ref": "DMZSubnet2"}
+      }
+    },
+
+    "AppSubnet1RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "AppRouteTable"},
+        "SubnetId" : {"Ref": "AppSubnet1"}
+      }
+    },
+    "AppSubnet2RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "AppRouteTable"},
+        "SubnetId" : {"Ref": "AppSubnet2"}
+      }
+    },
+
+    "WebSubnet1RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "WebRouteTable"},
+        "SubnetId" : {"Ref": "WebSubnet1"}
+      }
+    },
+    "WebSubnet2RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref":"WebRouteTable"},
+        "SubnetId" : {"Ref": "WebSubnet2"}
+      }
+    },
+
+    "DBSubnet1RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "DBRouteTable"},
+        "SubnetId" : {"Ref": "DBSubnet1"}
+      }
+    },
+    "DBSubnet2RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "DBRouteTable"},
+        "SubnetId" : {"Ref": "DBSubnet2"}
+      }
+    },
+
+    "IntElbSubnet1RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "IntElbRouteTable"},
+        "SubnetId" : {"Ref": "IntElbSubnet1"}
+      }
+    },
+    "IntElbSubnet2RouteTableAssociation":  {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "RouteTableId" : {"Ref": "IntElbRouteTable"},
+        "SubnetId" : {"Ref": "IntElbSubnet2"}
+      }
+    },
+
+    "DMZNetworkAcl" : {
+      "Type" : "AWS::EC2::NetworkAcl",
+      "Properties" : {
+        "VpcId" : { "Ref" : "MyVPCWordpress" },
+        "Tags" : [ { "Key" : "foo", "Value" : "bar" } ]
+      }
+    },
+
+    "AppNetworkAcl" : {
+      "Type" : "AWS::EC2::NetworkAcl",
+      "Properties" : {
+        "VpcId" : { "Ref" : "MyVPCWordpress" },
+        "Tags" : [ { "Key" : "foo", "Value" : "bar" } ]
+      }
+    },
+
+    "WebNetworkAcl" : {
+      "Type" : "AWS::EC2::NetworkAcl",
+      "Properties" : {
+        "VpcId" : { "Ref" : "MyVPCWordpress" },
+        "Tags" : [ { "Key" : "foo", "Value" : "bar" } ]
+      }
+    },
+
+    "DBNetworkAcl" : {
+      "Type" : "AWS::EC2::NetworkAcl",
+      "Properties" : {
+        "VpcId" : { "Ref" : "MyVPCWordpress" },
+        "Tags" : [ { "Key" : "foo", "Value" : "bar" } ]
+      }
+    },
+
+    "IntElbNetworkAcl" : {
+      "Type" : "AWS::EC2::NetworkAcl",
+      "Properties" : {
+        "VpcId" : { "Ref" : "MyVPCWordpress" },
+        "Tags" : [ { "Key" : "foo", "Value" : "bar" } ]
+      }
+    },
+
+    "DMZSubnetRouteTableAssociation1" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "DMZSubnet1" },
+        "RouteTableId" : { "Ref" : "DMZRouteTable" }
+      }
+    },
+
+    "DMZSubnetRouteTableAssociation2" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "DMZSubnet2" },
+        "RouteTableId" : { "Ref" : "DMZRouteTable" }
+      }
+    },
+
+    "DMZNatGateway" : {
+      "Type" : "AWS::EC2::NatGateway",
+      "Properties" : {
+        "AllocationId" : { "Fn::GetAtt" : ["EIP", "AllocationId"]},
+        "SubnetId" : {"Ref" : "DMZSubnet1"}
+      }
+    },
+    "EIP" : {
+      "DependsOn" : "VPCGatewayAttachment",
+      "Type" : "AWS::EC2::EIP",
+      "Properties" : {
+        "Domain" : "vpc"
+       }
+    },
+    "Route" : {
+      "Type" : "AWS::EC2::Route",
+      "Properties" : {
+        "RouteTableId" : { "Ref" : "DMZRouteTable" },
+        "DestinationCidrBlock" : "0.0.0.0/0",
+        "NatGatewayId" : { "Ref" : "DMZNatGateway" }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
